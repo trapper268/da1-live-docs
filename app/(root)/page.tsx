@@ -34,7 +34,8 @@ const Home = async () => {
             height={40}
             className="mx-auto" />
           <AddDocumentBtn
-
+            userId={clerkUser.id}
+            email={clerkUser.emailAddresses[0].emailAddress}
           />
         </div>
       )}
