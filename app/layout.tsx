@@ -5,6 +5,7 @@ import './globals.css';
 import { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import Provider from "./Provider";
 
 const fontSants = FontSants({
   subsets: ["latin"],
@@ -25,16 +26,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           colorBackground: "#060d18",
           fontSize: '16px'
         },
-
-      }
-      }>
+      }}>
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
             "min-h-screen font-sans antialiased flex flex-col",
             fontSants.variable
           )}>
-          {children}
+          <Provider>
+            {children}
+          </Provider>
         </body>
       </html>
     </ClerkProvider>
