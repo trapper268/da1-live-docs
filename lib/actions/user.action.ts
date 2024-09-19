@@ -3,10 +3,10 @@
 import { clerkClient, EmailAddress } from "@clerk/nextjs/server"
 import { parseStringify } from "../utils"
 
-export const getClerkUsers = async ({ usersId }: { usersId: string[] }) => {
+export const getClerkUsers = async ({ userIds }: { usersIds: string[] }) => {
     try {
         const { data } = await clerkClient.users.getUserList({
-            emailAddress: usersId
+            emailAddress: userIds
         })
 
         const users = data.map((user) => ({
@@ -16,7 +16,7 @@ export const getClerkUsers = async ({ usersId }: { usersId: string[] }) => {
             avatar: user.imageUrl
         }))
 
-        const sortedUsers = usersId.map((email) => users.find((user) => user.email === email))
+        const sortedUsers = userIds.map((email: any) => users.find((user) => user.email === email))
 
         return parseStringify(sortedUsers)
     } catch (error) {
