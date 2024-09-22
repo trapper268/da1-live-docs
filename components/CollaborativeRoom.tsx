@@ -62,7 +62,6 @@ const CollaborativeRoom = ({ roomId, roomMetadata, users, currentUserType }: Col
         }
     }, [editing])
 
-    //console.log("currentUserType", currentUserType)
     return (
         <RoomProvider id={roomId}>
             <ClientSideSuspense fallback={<Loader />}>
