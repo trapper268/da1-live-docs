@@ -1,14 +1,15 @@
-import { useOthers } from '@liveblocks/react/suspense'
-import Image from 'next/image'
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useOthers } from "@liveblocks/react/suspense";
+import Image from "next/image";
+import React from "react";
 
 const ActiveCollaborators = () => {
-  const other = useOthers()
+  const other = useOthers();
 
-  const collaborators = other.map((other) => other.info)
+  const collaborators = other.map((other) => other.info);
 
   return (
-    <ul className='collaborators-list'>
+    <ul className="collaborators-list">
       {collaborators.map(({ id, avatar, name, color }: any) => (
         <li key={id}>
           <Image
@@ -16,13 +17,13 @@ const ActiveCollaborators = () => {
             alt={name}
             width={100}
             height={100}
-            className='inline-block size-8 rounded-full ring-2 ring-dark-100'
+            className="inline-block size-8 rounded-full ring-2 ring-dark-100"
             style={{ border: `1px solid ${color}` }}
           />
         </li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
-export default ActiveCollaborators
+export default ActiveCollaborators;
