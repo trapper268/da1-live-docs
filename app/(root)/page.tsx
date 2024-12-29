@@ -2,7 +2,7 @@ import AddDocumentBtn from "@/components/AddDocumentBtn";
 import DeleteModal from "@/components/DeleteModal";
 import Header from "@/components/Header";
 import Notification from "@/components/Notification";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { getDocuments } from "@/lib/actions/room.actions";
 import { dateConverter } from "@/lib/utils";
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -12,10 +12,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const Home = async () => {
-  const clerkUser = await currentUser()
-  if (!clerkUser) redirect('/sign-in')
+  const clerkUser = await currentUser();
+  if (!clerkUser) redirect("/sign-in");
 
-  const roomDocuments = await getDocuments(clerkUser.emailAddresses[0].emailAddress)
+  const roomDocuments = await getDocuments(
+    clerkUser.emailAddresses[0].emailAddress
+  );
 
   return (
     <main className="home-container">
@@ -38,34 +40,53 @@ const Home = async () => {
             />
           </div>
           <ul className="document-ul">
-            {roomDocuments.data.map(({ id, metadata, createdAt }: any) => {
-              return (
-                <li key={id} className="document-list-item">
-                  <Link href={`/documents/${id}`} className="flex flex-1 items-center gap-4">
-                    <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
-                      <Image
-                        src={"assets/icons/doc.svg"}
-                        alt="file"
-                        width={40}
-                        height={40} />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="line-clamp-1 text-lg">{metadata.title}</p>
-                      <p className="text-sm font-light text-blue-100">Created about {dateConverter(createdAt)}</p>
-                    </div>
-                  </Link>
-                  <DeleteModal roomId={id} />
-                </li>
-              )
-            })}
+            {roomDocuments.data.map(
+              ({
+                id,
+                metadata,
+                createdAt,
+              }: {
+                id: string;
+                metadata: { title: string };
+                createdAt: string;
+              }) => {
+                return (
+                  <li key={id} className="document-list-item">
+                    <Link
+                      href={`/documents/${id}`}
+                      className="flex flex-1 items-center gap-4"
+                    >
+                      <div className="hidden rounded-md bg-dark-500 p-2 sm:block">
+                        <Image
+                          src={"assets/icons/doc.svg"}
+                          alt="file"
+                          width={40}
+                          height={40}
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="line-clamp-1 text-lg">{metadata.title}</p>
+                        <p className="text-sm font-light text-blue-100">
+                          Created about {dateConverter(createdAt)}
+                        </p>
+                      </div>
+                    </Link>
+                    <DeleteModal roomId={id} />
+                  </li>
+                );
+              }
+            )}
           </ul>
         </div>
       ) : (
         <div className="document-list-empty">
-          <Image src='/assets/icons/doc.svg' alt="Document"
+          <Image
+            src="/assets/icons/doc.svg"
+            alt="Document"
             width={40}
             height={40}
-            className="mx-auto" />
+            className="mx-auto"
+          />
           <AddDocumentBtn
             userId={clerkUser.id}
             email={clerkUser.emailAddresses[0].emailAddress}
@@ -73,7 +94,7 @@ const Home = async () => {
         </div>
       )}
     </main>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
